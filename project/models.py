@@ -22,7 +22,7 @@ class UserAccount(BaseModel, UserMixin):
     account_name = Column(String(50), nullable=False, unique=True)
     email = Column(String(50), nullable=False, unique=True)
     username = Column(String(20), nullable=False, unique=True)
-    password = Column(String(100), nullable=False)
+    password = Column(String(250), nullable=False)
     reg_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     phone = Column(String(10), nullable=False)
     user_role = Column(Enum(AccountRoleEnum), default=AccountRoleEnum.USER)
@@ -33,8 +33,6 @@ class UserAccount(BaseModel, UserMixin):
 class Seat(BaseModel):
     __tablename__ = 'seats'
     seat_name = Column(String(50), nullable=False)
-    ticket_id = Column(Integer, ForeignKey("tickets.id"), nullable=False, unique=True)
-    ticket = relationship('Ticket', back_populates='seat', uselist=False)
     airplane_id = Column(Integer, ForeignKey('airplanes.id'), nullable=False)
     airplane = relationship('Airplane', back_populates='seats')
 class Airplane(BaseModel):
@@ -63,7 +61,9 @@ class Ticket(BaseModel):
     ticket_type = Column(Enum(TicketTypeEnum), nullable=False)
     buy_time = Column(DateTime(), nullable=False)
     user_account_id = Column(Integer, ForeignKey(UserAccount.id), nullable=False)
-    airplane_id = Column(Integer, ForeignKey(Airplane.id), nullable=False)
+    flight_id = Column(Integer, ForeignKey(Flight.id), nullable=False)
+    seat_id = Column(Integer, ForeignKey("seats.id"), nullable=False)
+    seat = relationship('Seat', back_populates='ticket', uselist=False)
 
 if __name__ == '__main__':
     with app.app_context():
