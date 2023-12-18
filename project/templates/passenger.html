@@ -1,0 +1,56 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<form action="/action_page.php">
+    <div class="container-fluid mt-3">
+        <h4 class="mb-2">Thông tin khách hàng</h4>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="myEmail">Họ tên</label>
+                    <input type="email" class="form-control"
+                           id="myEmail" placeholder="Nguyen Van A">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress1">Ngày Sinh</label>
+                    <input type="date" class="form-control"
+                           id="myAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Quốc tịch</label>
+                    <input type="text" class="form-control"
+                           id="myAddress" placeholder="1234 Main St">
+                </div>
+                 <div class="form-group">
+                    <label for="inputAddress2">CCCD</label>
+                    <input type="text" class="form-control"
+                           id="myAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="myPassword">Email</label>
+                    <input type="password" class="form-control"
+                           id="myPassword" placeholder="abc@gmmail.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress3">Địa chỉ</label>
+                <input type="text" class="form-control"
+                       id="myAddress" placeholder="1234 Main St">
+            </div>
+            <div class="form-group">
+                <label for="inputAddress4">Số điện thoại</label>
+                <input type="text" class="form-control"
+                       id="myAddress2" placeholder="123456789">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="myCheck">
+                    <label class="form-check-label" for="myCheck">
+                        Tôi cam kết với điều khoản
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Tiếp tục</button>
+        </form>
+    </div>
+</form>
+{% endblock %}
