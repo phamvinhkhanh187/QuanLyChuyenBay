@@ -1,28 +1,31 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html" id="logo"><span>Vn</span>Arilne</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Trang chủ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Liên Hệ</a>
-        </li>
-      </ul>
-       <div class="form-inline my-2 my-lg-0">
-         <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-              <a href="" class="btn btn-primary" data-toggle="modal" data-target="#modalLoginForm">Đăng nhập</a>
-          </li>
-          <li class="nav-item">
-              <a href="" class="btn btn-info" data-toggle="modal" data-target="#modalRegisterForm">Đăng ký</a>
-          </li>
-           </ul>
-      </div>
+<header class="position-fixed top-0 start-0 end-0 shadow-sm navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand fs-3 fw-bold" href="/">CNPM</a>
+            <div class="d-flex gap-1 ms-auto">
+                {% if current_user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ current_user.fullname }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        {% if current_user.user_role != user_role.USER %}
+                        <a href="/admin" class="dropdown-item">Quản lý</a>
+                        {% endif %}
+                        <a href="/logout" class="dropdown-item">Đăng xuất</a>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="/login" class="btn btn-primary">Đăng nhập</a>
+                <a href="/register" class="btn btn-secondary">Đăng ký</a>
+                {% endif %}
+
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
+</header>
