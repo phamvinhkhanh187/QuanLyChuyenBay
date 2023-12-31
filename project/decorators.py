@@ -3,7 +3,7 @@ from flask_login import current_user
 from flask import redirect
 
 
-def admin_user(f):
+def protect_user(f):
     def decorated_func(*args, **kwargs):
         if current_user.is_authenticated:
             return redirect('/')

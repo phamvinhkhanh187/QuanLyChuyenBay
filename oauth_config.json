@@ -1,0 +1,12 @@
+{
+    "web":
+    {
+    "client_id":"175532100285-3o8h4h87pt7upalbji1ojssov3sn8eit.apps.googleusercontent.com",
+    "project_id":"proven-signal-395110","auth_uri":"https://accounts.google.com/o/oauth2/auth",
+    "token_uri":"https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret":"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",
+    "redirect_uris":["http://localhost:5001/callback"],
+    "javascript_origins":["https://localhost:5001"]
+    }
+}

@@ -3,7 +3,7 @@ from project import app, db, dao
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user, logout_user
-from project.models import UserRole, UserAccount, FlightSchedule, Airport, BetweenAirport, AdminRules
+from project.models import UserRole, User, FlightSchedule, Airport, BetweenAirport, ADMINRules
 import json
 
 
@@ -91,9 +91,9 @@ class StatsView(AuthenticatedAdminView):
 
 
 admin = Admin(app=app, name='Quản lý', template_mode='bootstrap4', index_view=MyAdminView())
-admin.add_view(UserView(UserAccount, db.session, name="Người dùng"))
+admin.add_view(UserView(User, db.session, name="Người dùng"))
 admin.add_view(AirportView(Airport, db.session, name='Sân bay'))
-admin.add_view(RulesView(AdminRules, db.session, name='Quy định'))
+admin.add_view(RulesView(ADMINRules, db.session, name='Quy định'))
 admin.add_view(FlightScheView(FlightSchedule, db.session, name='Lịch chuyến bay'))
 admin.add_view(StatsView(name="Thống kê báo cáo"))
 admin.add_view(HomeView(name='Trang chủ người dùng'))

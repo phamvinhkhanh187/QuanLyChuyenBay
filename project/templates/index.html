@@ -23,28 +23,33 @@
                 <div>
                     <label for="ap_from" class="form-label">Từ:</label>
                     <input class="form-control"
-                           {% if session['inp_search'] %} value="{{ '%s - %s' % (session['inp_search'].airport_from.id, session['inp_search'].airport_from.name) }}" {% endif %}
-                           list="airports" name="from" id="ap_from">
+                           {% if session['inp_search'] %} value="{{ '%s - %s' % (session['inp_search'].airport_from.id,
+                    session['inp_search'].airport_from.name) }}" {% endif %} list="airports" name="from" id="ap_from">
                 </div>
 
                 <div>
                     <label for="ap_to" class="form-label">Đến:</label>
                     <input class="form-control"
-                           {% if session['inp_search'] %} value="{{ '%s - %s' % (session['inp_search'].airport_to.id, session['inp_search'].airport_to.name) }}" {% endif %}
-                           list="airports" name="to" id="ap_to">
+                           {% if session['inp_search'] %} value="{{ '%s - %s' % (session['inp_search'].airport_to.id,
+                    session['inp_search'].airport_to.name) }}" {% endif %} list="airports" name="to" id="ap_to">
                 </div>
 
             </div>
             <div class="mt-2 d-flex gap-3">
                 <div class="flex-grow-1">
                     <label for="time_start" class="form-label">Ngày đi:</label>
-                    <input class="form-control" {% if session['inp_search'] %} value="{{ session['inp_search'].time_start }}" {% endif %} name="dayStart" id="time_start" type="date">
+                    <input class="form-control" {% if session['inp_search'] %} value="{{
+                    session['inp_search'].time_start }}" {% endif %} name="dayStart" id="time_start" type="date" >
                 </div>
                 <div class="align-self-end">
                     <label for="ticket_type" class="form-label">Ghế:</label>
                     <select id="ticket_type" name="rankChair" class="form-select">
-                        <option {% if session['inp_search'] and session["inp_search"].ticket_type=="1" %}selected="selected"{% endif %} value="1">Hạng 1</option>
-                        <option {% if session['inp_search'] and session['inp_search'].ticket_type=="2" %}selected="selected"{% endif %} value="2">Hạng 2</option>
+                        <option {% if session[
+                        'inp_search'] and session["inp_search"].ticket_type=="1" %}selected="selected"{% endif %}
+                        value="1">Hạng 1</option>
+                        <option {% if session[
+                        'inp_search'] and session['inp_search'].ticket_type=="2" %}selected="selected"{% endif %}
+                        value="2">Hạng 2</option>
                     </select>
                 </div>
             </div>

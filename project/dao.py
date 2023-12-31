@@ -1,14 +1,14 @@
 from flask import request, session
 from sqlalchemy import func, desc, extract, and_
 
-from project.models import UserAccount, Airport, FlightSchedule, BetweenAirport, Ticket, AdminRules, Customer
+from project.models import User, Airport, FlightSchedule, BetweenAirport, Ticket, ADMINRules, Customer
 from project import db
 import hashlib
 import datetime
 import google.auth.transport.requests
 from pip._vendor import cachecontrol
 import requests
-# from project import flow
+from project import flow
 from google.oauth2 import id_token
 import os
 from dotenv import load_dotenv
@@ -20,36 +20,36 @@ load_dotenv()
 
 def get_user_by_id(user_id):
     session['user_cur_id'] = user_id
-    return UserAccount.query.get(user_id)
+    return User.query.get(user_id)
 
 
 def register(fullname, username, password):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    u = UserAccount(fullname=fullname, username=username.strip(), password=password)
+    u = User(fullname=fullname, username=username.strip(), password=password)
     db.session.add(u)
     db.session.commit()
 
 
 def auth_user(username, password):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    return UserAccount.query.filter(UserAccount.username.__eq__(username.strip()),
-                             UserAccount.password.__eq__(password)).first()
+    return User.query.filter(User.username.__eq__(username.strip()),
+                             User.password.__eq__(password)).first()
 
 
-# def get_user_oauth():
-#     flow.fetch_token(authorization_response=request.url)
-#
-#     credentials = flow.credentials
-#     request_session = requests.session()
-#     cached_session = cachecontrol.CacheControl(request_session)
-#     token_request = google.auth.transport.requests.Request(session=cached_session)
-#
-#     user_oauth = id_token.verify_oauth2_token(
-#         id_token=credentials._id_token,
-#         request=token_request,
-#         audience=os.getenv("OAUTH_CLIENT_ID")
-#     )
-#     return user_oauth
+def get_user_oauth():
+    flow.fetch_token(authorization_response=request.url)
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    user_oauth = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=os.getenv("OAUTH_CLIENT_ID")
+    )
+    return user_oauth
 
 
 def get_airport_list():
@@ -301,7 +301,7 @@ def delete_flight_schedule(f_id):
 
 
 def get_admin_rules_latest():
-    ar = AdminRules.query.order_by(AdminRules.created_at.desc()).first()
+    ar = ADMINRules.query.order_by(ADMINRules.created_at.desc()).first()
     return ar
 
 
@@ -315,7 +315,7 @@ def confirm_user(u_id, password):
 
 def create_admin_rules(min_time_flight_sche, max_between_airport_quantity, min_time_stay_airport,
                        max_time_stay_airport, customer_time_ticket, staff_time_ticket):
-    ar = AdminRules(min_time_flight_sche=min_time_flight_sche,
+    ar = ADMINRules(min_time_flight_sche=min_time_flight_sche,
                     max_between_airport_quantity=max_between_airport_quantity,
                     min_time_stay_airport=min_time_stay_airport, max_time_stay_airport=max_time_stay_airport,
                     customer_time_ticket=customer_time_ticket, staff_time_ticket=staff_time_ticket,
@@ -326,7 +326,7 @@ def create_admin_rules(min_time_flight_sche, max_between_airport_quantity, min_t
 
 
 def get_admin_rules_list():
-    return AdminRules.query.order_by(AdminRules.created_at.desc()).all()
+    return ADMINRules.query.order_by(ADMINRules.created_at.desc()).all()
 
 
 def get_data_stats():

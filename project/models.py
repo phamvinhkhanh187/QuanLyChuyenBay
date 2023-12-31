@@ -7,7 +7,7 @@ from project import db, app
 from flask_login import UserMixin
 import hashlib
 
-default_password = str(hashlib.md5('admin123'.encode('utf-8')).hexdigest())
+default_password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
 
 
 class UserRole(UserEnum):
@@ -21,11 +21,12 @@ class BaseModel(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
 
 
-class UserAccount(BaseModel, UserMixin):
+class User(BaseModel, UserMixin):
+    __tablename__ = 'user'
     fullname = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(250), default=default_password)
-    image = Column(String(200))
+    password = Column(String(300), default=default_password)
+    image = Column(String(300))
     user_role = Column(Enum(UserRole), default=UserRole.USER)
 
     def __str__(self):
@@ -80,7 +81,7 @@ class Customer(BaseModel):
 
 
 class Ticket(BaseModel):
-    author_id = Column(Integer, ForeignKey(UserAccount.id), nullable=True)
+    author_id = Column(Integer, ForeignKey(User.id), nullable=True)
     customer_id = Column(Integer, ForeignKey(Customer.id))
     flight_sche_id = Column(Integer, ForeignKey(FlightSchedule.id))
     ticket_price = Column(Integer, nullable=False)
@@ -89,7 +90,7 @@ class Ticket(BaseModel):
     created_at = Column(DateTime, default=datetime.datetime.now())
 
 
-class AdminRules(BaseModel):
+class ADMINRules(BaseModel):
     min_time_flight_sche = Column(Float, default=0.5)
     max_between_airport_quantity = Column(Float, default=2)
     min_time_stay_airport = Column(Float, default=0.33)
@@ -103,9 +104,9 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-        a = UserAccount(fullname='Quản trị viên', username='admin', user_role=UserRole.ADMIN)
-        s = UserAccount(fullname='Nhân viên', username='staff', user_role=UserRole.STAFF)
-        u = UserAccount(fullname='Người dùng', username='user', user_role=UserRole.USER)
+        a = User(fullname='Quản trị viên', username='admin', user_role=UserRole.ADMIN)
+        s = User(fullname='Nhân viên', username='staff', user_role=UserRole.STAFF)
+        u = User(fullname='Người dùng', username='user', user_role=UserRole.USER)
         db.session.add_all([a, s, u])
         db.session.commit()
 
@@ -113,11 +114,17 @@ if __name__ == '__main__':
         a2 = Airport(name="Nội Bài")
         a3 = Airport(name="Côn Đảo")
         a4 = Airport(name="Cà Mau")
+        a5 = Airport(name="Cần Thơ")
+        a6 = Airport(name="Phú Bài")
+        a7 = Airport(name="Vân Đồn")
+        a8 = Airport(name="Đà Nẵng")
+        a9 = Airport(name="Phú Quốc")
+        a10 = Airport(name="Vinh")
 
-        db.session.add_all([a1, a2, a3, a4])
+        db.session.add_all([a1, a2, a3, a4, a5, a6, a7, a8, a9, a10])
         db.session.commit()
 
-        a = AdminRules()
+        a = ADMINRules()
         db.session.add(a)
         db.session.commit()
 

@@ -14,7 +14,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv('SECRET_KEY')
+# Đặt secret key
+app.secret_key = '32121asdf1@$!2ed32SF12563R23ASDF'
 
 moment = Moment(app)
 

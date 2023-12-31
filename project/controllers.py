@@ -1,8 +1,8 @@
 from flask import render_template, redirect, request, session
 from project import dao, db, flow
-from project.models import UserRole, UserAccount
+from project.models import UserRole, User
 from flask_login import login_user, logout_user, current_user
-from project.decorators import admin_user
+from project.decorators import protect_user
 
 
 def index():
@@ -10,7 +10,7 @@ def index():
     return render_template('index.html', airport_list=airport_list)
 
 
-@admin_user
+@protect_user
 def login():
     if request.method.__eq__('POST'):
         username = request.form['username']
@@ -28,7 +28,7 @@ def login():
     return render_template('login.html')
 
 
-@admin_user
+@protect_user
 def register():
     err_msg = ''
     if request.method == 'POST':
@@ -58,13 +58,13 @@ def oauth_callback():
     try:
         user_oauth = dao.get_user_oauth()
         email = user_oauth['email']
-        user = UserAccount.query.filter_by(username=email).first()
+        user = User.query.filter_by(username=email).first()
         if user is None:
             import hashlib
             password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
             fullname = user_oauth['name']
             image = user_oauth['picture']
-            user = UserAccount(fullname=fullname, username=email, password=password, image=image)
+            user = User(fullname=fullname, username=email, password=password, image=image)
             db.session.add(user)
             db.session.commit()
         login_user(user)
