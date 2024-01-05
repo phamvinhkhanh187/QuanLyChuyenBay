@@ -236,7 +236,7 @@ def get_inp_search_json(af_id, at_id, time_start, ticket_type):
 
 
 def check_paypal(number_card, mm_yy, cvc_code, name):
-    if number_card == "1234 1234 1234 1234" and mm_yy == "12 / 34" and cvc_code == "123" and name == "CNPM":
+    if number_card == "1234 1234 1234 1234" and mm_yy == "12 / 34" and cvc_code == "123" and name == "PHAM VINH KHANH":
         return True
     return False
 
