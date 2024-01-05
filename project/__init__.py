@@ -9,7 +9,7 @@ import pathlib
 from google_auth_oauthlib.flow import Flow
 from dotenv import load_dotenv
 from flask_moment import Moment
-
+import cloudinary.uploader
 load_dotenv()
 
 app = Flask(__name__)
@@ -28,11 +28,11 @@ db = SQLAlchemy(app=app)
 
 login = LoginManager(app=app)
 
-cloudinary.config(cloud_name=os.getenv('CLOUDINARY_NAME'),
-                  api_key=os.getenv('CLOUDINARY_API_KEY'),
-                  api_secret=os.getenv('CLOUDINARY_API_SECRET'))
+cloudinary.config(cloud_name='dba0vclo4',
+                  api_key='997854835189435',
+                  api_secret='nUIvQ-KNibg2BOa6nqIyc44jHko')
 
-#oauth google login
+# oauth google login
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent.parent, "oauth_config.json")
 flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
@@ -40,6 +40,7 @@ flow = Flow.from_client_secrets_file(
             "openid"],
     redirect_uri="http://localhost:5001/callback"
 )
+
 
 babel = Babel(app=app)
 

@@ -36,12 +36,15 @@ def register():
         confirm = request.form['confirm']
         if password.__eq__(confirm):
             try:
+                print(request.files.get('avatar'))
                 dao.register(fullname=request.form['fullname'],
                              username=request.form['username'],
-                             password=password)
+                             password=password,
+                             avatar=request.files.get('avatar'))
 
                 return redirect("/login")
             except Exception as err:
+                print(err)
                 err_msg = 'Lỗi server! Không thể đăng ký user!'
         else:
             err_msg = 'Mật khẩu không khớp!'
@@ -63,8 +66,8 @@ def oauth_callback():
             import hashlib
             password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
             fullname = user_oauth['name']
-            image = user_oauth['picture']
-            user = User(fullname=fullname, username=email, password=password, image=image)
+            avatar = user_oauth['picture']
+            user = User(fullname=fullname, username=email, password=password, avatar=avatar)
             db.session.add(user)
             db.session.commit()
         login_user(user)

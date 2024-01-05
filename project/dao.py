@@ -14,6 +14,7 @@ import os
 from dotenv import load_dotenv
 import calendar
 import time
+import cloudinary.uploader
 
 load_dotenv()
 
@@ -23,9 +24,17 @@ def get_user_by_id(user_id):
     return User.query.get(user_id)
 
 
-def register(fullname, username, password):
+def register(fullname, username, password, avatar):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    u = User(fullname=fullname, username=username.strip(), password=password)
+    u = User()
+    u.fullname = fullname
+    u.username = username.strip()
+    u.password = password
+    u.avatar = 'https://res.cloudinary.com/dba0vclo4/image/upload/v1704361304/user_kppyl1.png'
+    if avatar:
+        print(avatar)
+        res = cloudinary.uploader.upload(avatar)
+        u.avatar = res['secure_url']
     db.session.add(u)
     db.session.commit()
 

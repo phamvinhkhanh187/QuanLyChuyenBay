@@ -8,6 +8,7 @@
             <a class="navbar-brand fs-3 fw-bold" href="/">VN AirLine</a>
             <div class="d-flex gap-1 ms-auto">
                 {% if current_user.is_authenticated %}
+                <img src="{{current_user.avatar}}" width="45" class="rounded" />
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,6 +21,7 @@
                         <a href="/logout" class="dropdown-item">Đăng xuất</a>
                     </ul>
                 </div>
+
                 {% else %}
                 <a href="/login" class="btn btn-primary">Đăng nhập</a>
                 <a href="/register" class="btn btn-secondary">Đăng ký</a>

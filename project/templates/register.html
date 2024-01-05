@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<div class="h-100 d-flex align-item-center justify-content-center">
-    <form method="post" action="" style="height: fit-content; min-width: 300px"
-          class="my-auto p-4 bg-white shadow-lg rounded-1">
+<div class="h-100 d-flex align-item-center justify-content-center" >
+    <form method="post" action="{{ url_for('register') }}" style="height: fit-content; min-width: 300pxl;"
+          class="my-auto p-4 bg-white shadow-lg rounded-1" enctype="multipart/form-data">
 
         <div class="fs-3 text-primary text-center my-4">Đăng ký</div>
 
@@ -31,7 +31,10 @@
             <label class="form-label" for="confirm">Xác nhận mật khẩu:</label>
             <input required name="confirm" type="password" id="confirm" class="form-control"/>
         </div>
-
+        <div class="form-outline mb-4">
+            <label for="avatar" class="form-label">Ảnh đại diện:</label>
+            <input type="file" class="form-control" id="avatar" name="avatar">
+        </div>
         <!-- Submit button -->
         <button disabled type="submit" class="w-100 btn btn-primary btn-block mb-4">Đăng ký</button>
 
