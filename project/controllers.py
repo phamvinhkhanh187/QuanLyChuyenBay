@@ -67,13 +67,18 @@ def oauth_callback():
             password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
             fullname = user_oauth['name']
             avatar = user_oauth['picture']
-            user = User(fullname=fullname, username=email, password=password, avatar=avatar)
+            user = User()
+            user.fullname = fullname
+            user.username = email
+            user.password = password
+            user.avatar = avatar
             db.session.add(user)
             db.session.commit()
         login_user(user)
         if user.user_role == UserRole.ADMIN:
             return redirect('/admin')
-    except:
+    except Exception as e:
+        print(f"An error occurred: {e}")
         return redirect("/")
     return redirect("/")
 
